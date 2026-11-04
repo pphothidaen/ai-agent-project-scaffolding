@@ -1,0 +1,43 @@
+name: AI Agent SDLC Guardrails
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  guardrails:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+        cache: "pip"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e ".[dev]"
+
+    # Deep-review checkbox: - [ ] Human PR merge approved for Deep-layer changes (arch, data model, auth, deps, concurrency, migrations).
+    - name: Run Code Reviewer & Boundary Guardrails
+      run: |
+        python scripts/code_reviewer.py
+
+    - name: Run TDD Gatekeeper & Test Suites
+      run: |
+        python scripts/tdd_gate.py
+
+    - name: Run Eval Suite on PR
+      run: |
+        python -m pytest tests/evals -v
+
+    - name: Collect AI SDLC Metrics
+      run: |
+        python scripts/ai_sdlc_metrics.py

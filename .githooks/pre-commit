@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -e
+
+echo "[Pre-commit Hook] Running code guardrails and format checks..."
+python3 scripts/code_reviewer.py
+

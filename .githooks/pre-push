@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -e
+
+echo "[Pre-push Hook] Verifying TDD gates before pushing..."
+python3 scripts/tdd_gate.py
+

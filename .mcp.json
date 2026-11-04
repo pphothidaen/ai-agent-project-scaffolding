@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/kimlenglim/Project/ai-agent-project-scaffolding"
+      ],
+      "description": "Workspace File System Access Server"
+    }
+  }
+}
